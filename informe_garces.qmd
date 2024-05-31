@@ -1,0 +1,54 @@
+---
+title: "Informe FONDEF21|10297"
+subtitle: "Resultado preliminares"
+author: "M. Abel Herrera"
+format: html
+editor: visual
+lang: es
+
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+## Presentación
+
+El presente informe tiene como objetivo presentar los resultados actuales del proyecto FONDEF21\|10297 del “Sistema Satelital para la Optimización del Riego (SATORI)”, a cargo del Dr. Francisco Zambrano de la Universidad Mayor. En términos generales, el proyecto se centra en dos grandes hitos, los cuales son: (1) el desarrollo de un modelo de estimación de potencial hídrico xilemático en campos de cerezos de la zona central de Chile, mediante la utilización de datos satelitales; y (2) la creación de una plataforma de visualización de la variabilidad espaciotemporal del potencial mediante la observación satelital. Estos dos hitos se enmarcan en la idea de optimizar el riego de los cultivos, ajustando el aporte hídrico de manera que se evite sobrecargar el estrés de la planta hasta un nivel significativo que afecte la producción. En otras palabras, se pretende regular el riego en la medida en que el potencial hídrico no alcance el punto de pérdida de turgor en los cerezos.
+
+Específicamente, este informe se enfocará en el primer hito: en el desarrollo del modelo de estimación de potencial hídrico xilemático, sus principales resultados y desafíos encontrados. Además, se presentarán los resultados de las estimaciones del punto de pérdida de turgor en los cerezos de los campos.
+
+## Métodos
+
+### Punto de pérdida de turgor
+
+Para estimar el punto de pérdida de turgor (TLP), se utilizó la metodología descrita por Halbritter et al. (2020). Este enfoque implica la construcción de curvas de presión-volumen mediante mediciones de presión realizadas con la bomba Scholander. Los datos obtenidos se emplearon para construir las curvas de presión-volumen, a partir de las cuales se identificó el punto de pérdida de turgor, definido como el punto en la curva donde la relación entre la presión y el volumen cambia abruptamente, indicando que las células han perdido su rigidez y la turgencia se ha reducido significativamente.
+
+### Modelo de potencial
+
+Para desarrollar el modelo de potencial, se delimitó el área de estudio a dos campos de cerezos ubicados en las comunas de Peumo y San Fernando, en la Provincia del Cachapoal, Región de O’Higgins. En primer lugar, se tomaron muestras de potencial hídrico utilizando la Bomba de Scholander. Este instrumento mide el potencial hídrico de las plantas aplicando presión a una hoja o rama cortada hasta que el agua comienza a salir de los vasos conductores (Scholander et al., 1965). Las mediciones se realizaron en árboles de cerezos de la variedad Regina sometidos a cinco diferentes tratamientos hídricos: un tratamiento de control (T0) con el mismo régimen hídrico que el resto de los árboles en el campo, y cuatro tratamientos con déficit hídrico que varían de leve a severo (T1 a T4). Estas mediciones se llevaron a cabo durante las temporadas productivas entre los años 2022-2023 y 2023-2024 (meses de octubre a mayo). Para cada tratamiento hídrico, se seleccionaron tres árboles y se tomaron muestras diarias entre las 13:00 y 14:00 horas, con una frecuencia de una a dos semanas en ambos campos. Posteriormente, se obtuvieron imágenes Sentinel-2A para ambas temporadas, con una resolución espacial de 10 m y temporal de 5 días. De estas imágenes, se extrajeron todas las bandas y se calcularon índices relacionados con la cantidad de agua y el vigor de la vegetación, los cuales se utilizaron como variables predictoras del modelo de potencial hídrico. Además, se recopilaron datos climáticos de las estaciones meteorológicas de Garces ubicadas en cada campo, incluyendo temperatura, humedad relativa y déficit de presión de vapor, para incluirlos como variables independientes en el modelo. Finalmente, una vez reunido el conjunto de variables, se desarrolló el modelo predictivo de potencial hídrico utilizando la técnica de Random Forest y validación cruzada para evaluar su precisión.
+
+## Resultados
+
+### Potencial y punto de pérdida de turgor
+
+El análisis exploratorio de los datos obtenidos mediante las observaciones en terreno de potencial, y el punto de perdida de turgor obtenido a partir de las curvas presión-volumen (TLP~la_esperanza~ = -2.54 MPa; TLP~rio_claro~ = -2.2 MPa; ver figura 1), indican que este punto de estrés hídrico se alcanzó mayoritariamente en los meses de enero y febrero en el campo de Río Claro, durante la temporada 2022-2023. Además, en el mismo contexto se puede observar tendencias a la disminución de potencial para los tratamientos de estrés hídrico más severos (T3 y T4). Por el contrario, en La Esperanza no se observan disminuciones importantes de potencial, respecto al punto de pérdida de turgor, mientras que tampoco se aprecian diferencias a simple vista entre los tratamientos.
+
+![Figura 1. Series temporales de potencial hídrico xilemático según temporada (2022-2023; 2023-2024), sitio y tratamientos (T0 a T4). La unidad indica cada árbol por tratamiento (tres por tratamiento), mientras que la línea segmentada indica el punto de pérdida de turgor para cada sitio.](figs/potencial_series.png)
+
+### Modelo de potencial
+
+Respecto al modelo de estimación del potencial, los resultados exhiben un coeficiente de determinación (R^2^) de 0.75, un error cuadrático medio (RMSE) de 2.61 kPa, y un error absoluto medio (MAE) de 1.71 kPA (Figura 2), indicando en conjunto un rendimiento óptimo del modelo respecto a los datos observados en los árboles de muestreo.
+
+![Figura 2. Scatterplot valores de potencial predicho (eje x) vs. observados (eje y), junto a métricas del desempeño del modelo.](figs/scatterplots_estimado_observado_modelo_potencial.png)
+
+Paralelamente, las imágenes de la figura 3 muestran el valor promedio mensual de potencial predicho a las 13:00–14:00 hrs del día, en el campo de Rio Claro. En estas se puede ver que los valores de potencial reflejan una concordancia con la variabilidad estacional registrada en los datos observados, presentando mayores valores en enero, febrero y marzo.
+
+![Figura 3. Imagenes de potencial promedio mensual predicho en campo Rio Claro, para temporadas 2022-2023 y 2023-2024.](figs/potencial_raster_estimado_rio_claro.png)
+
+## Referencias
+
+Scholander, P. F., Hammel, H. T., Bradstreet, E. D., & Hemmingsen, E. A. (1965). Sap pressure in vascular plants. Science, 148(3668), 339-346.
+
+Halbritter, A. H., De Boeck, H. J., Eycott, A. E., Reinsch, S., Robinson, D. A., Vicca, S., ... & Wall, D. H. (2020). The handbook for standardized field and laboratory measurements in terrestrial climate-change experiments and observational studies (ClimEx). Methods in Ecology and Evolution, 11(1), 22-37.
+
